@@ -17,8 +17,8 @@ This article is intended to be a reference for them.
 
 	.. php:method:: initialize()
 
-		:returns:	TRUE on success, FALSE on failure
-		:rtype:	bool
+		:rtype:	void
+		:throws:	RuntimeException	In case of failure
 
 		Initialize database settings, establish a connection to
 		the database.
@@ -61,14 +61,6 @@ This article is intended to be a reference for them.
 
 		Select / switch the current database.
 
-	.. php:method:: db_set_charset($charset)
-
-		:param	string	$charset: Character set name
-		:returns:	TRUE on success, FALSE on failure
-		:rtype:	bool
-
-		Set client character set.
-
 	.. php:method:: platform()
 
 		:returns:	Platform name
@@ -83,7 +75,7 @@ This article is intended to be a reference for them.
 
 		Database version number.
 
-	.. php:method:: query($sql[, $binds = FALSE[, $return_object = NULL]]])
+	.. php:method:: query($sql[, $binds = FALSE[, $return_object = NULL]])
 
 		:param	string	$sql: The SQL statement to execute
 		:param	array	$binds: An array of binding data
@@ -233,6 +225,13 @@ This article is intended to be a reference for them.
 		Similar to ``escape_str()``, but will also escape the ``%``
 		and ``_`` wildcard characters, so that they don't cause
 		false-positives in LIKE conditions.
+
+		.. important:: The ``escape_like_str()`` method uses '!' (exclamation mark)
+			to escape special characters for *LIKE* conditions. Because this
+			method escapes partial strings that you would wrap in quotes
+			yourself, it cannot automatically add the ``ESCAPE '!'``
+			condition for you, and so you'll have to manually do that.
+
 
 	.. php:method:: primary($table)
 
